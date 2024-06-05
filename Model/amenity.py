@@ -1,4 +1,4 @@
-from Model.BaseModel import BaseModel
+from BaseModel import BaseModel
 
 class Amenities(BaseModel):
     def __init__(self, *args, **kargs):

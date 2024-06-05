@@ -1,4 +1,4 @@
-from Model.BaseModel import BaseModel
+from BaseModel import BaseModel
 
 class Countries(BaseModel):
     def __init__(self, *args, **kargs):
