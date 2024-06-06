@@ -1,9 +1,11 @@
-from Model.BaseModel import BaseModel
+from BaseModel import BaseModel
 
 class Amenities(BaseModel):
     def __init__(self, *args, **kargs):
         super().__init__(*args, **kargs)
+        self.places = []
 
+        
     def get_full_amenity(self):
         return f"{self.name}"
 
