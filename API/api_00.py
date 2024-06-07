@@ -14,6 +14,11 @@ def create_user():
     user_repository.save(user)
     return jsonify(user.to_dict()), 201
 
+@app.route('/users', methods=['GET'])
+def read_users():
+    users = user_repository.all()
+    return jsonify([user.to_dict() for user in users]), 200
+
 @app.route('/users/<email>', methods=['GET'])
 def read_user(email):
     user = user_repository.find_by_email(email)
