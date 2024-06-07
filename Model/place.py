@@ -1,5 +1,5 @@
-from BaseModel import BaseModel
-from .user import User
+from Model.BaseModel import BaseModel
+from Model.user import User
 
 
 class Places(BaseModel):
