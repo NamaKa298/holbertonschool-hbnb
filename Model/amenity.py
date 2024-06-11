@@ -1,6 +1,6 @@
-from BaseModel import BaseModel
+from Model.BaseModel import BaseModel
 
-class Amenities(BaseModel):
+class Amenity(BaseModel):
     def __init__(self, *args, **kargs):
         super().__init__(*args, **kargs)
         self.places = []
@@ -9,8 +9,4 @@ class Amenities(BaseModel):
     def get_full_amenity(self):
         return f"{self.name}"
 
-maDataDelaDatabase={"name":"Microwave oven"}
 
-amenity = Amenities(**maDataDelaDatabase)
-
-print(amenity.get_full_amenity(), amenity.__dict__)

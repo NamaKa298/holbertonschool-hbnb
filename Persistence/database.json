@@ -1,24 +1,31 @@
-class Database():
 {
-    private $host = "localhost";
-    private $db_name = "api_db";
-    private
-    $username = "root";
-    private $password = "";
-    public $conn;
-    public function getConnection()
-    {
-        $this->conn = null;
-        try
-        {
-            $this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, $this->password);
-            $this->conn->exec("set names utf8");
+    "User": {
+        "68e867b2-6c32-4d9e-bec5-fd19ea99d7c7": {
+            "id": "68e867b2-6c32-4d9e-bec5-fd19ea99d7c7",
+            "created_at": "2024-06-11T16:36:00.574747",
+            "updated_at": "2024-06-11T16:36:00.574754",
+            "email": "sdfsd@gm.com",
+            "first_name": "John",
+            "last_name": "Doe",
+            "places": []
+        },
+        "64a95ef6-7208-4285-81d1-387f876ad2d3": {
+            "id": "64a95ef6-7208-4285-81d1-387f876ad2d3",
+            "created_at": "2024-06-11T17:18:33.171694",
+            "updated_at": "2024-06-11T17:18:33.171702",
+            "email": "sdfsd@gm.com",
+            "first_name": "John2",
+            "last_name": "Doe",
+            "places": []
+        },
+        "1d9c57d2-a5c3-4f84-a83a-60c0cbd68206": {
+            "id": "1d9c57d2-a5c3-4f84-a83a-60c0cbd68206",
+            "created_at": "2024-06-11T17:20:47.363255",
+            "updated_at": "2024-06-11T17:20:47.363262",
+            "email": "sdfsd@gm.com",
+            "first_name": "John3",
+            "last_name": "Doe",
+            "places": []
         }
-        catch(PDOException $exception)
-        {
-            echo "Connection error: " . $exception->getMessage();
-        }
-        return $this->conn;
     }
 }
-

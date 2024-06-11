@@ -23,12 +23,10 @@ class BaseModel:
                     value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
                 if key != "__class__":
                     setattr(self, key, value)
-                    print(f"{key} = {value}")
         
         if (args):
             for key, value in args.items():
                 setattr(self, key, value)
-                print(f"{key} = {value}")
     
     @classmethod
     def exists(cls, entity):
@@ -57,20 +55,19 @@ class BaseModel:
 
     def to_dict(self):
         """Return a dictionary representation of the instance for JSON"""
-        return {
-            'id': self.id,
-            'created_at': self.created_at.isoformat(),
-            'updated_at': self.updated_at.isoformat(),
-        }
+        #self.created_at.isoformat()
+        #self.updated_at.isoformat()
+        data = {}
 
-    @classmethod
-    def from_dict(cls, data):
-        """Create an instance from a dictionary"""
-        if 'created_at' in data:
-            data['created_at'] = datetime.strptime(data['created_at'], "%Y-%m-%dT%H:%M:%S.%f")
-        if 'updated_at' in data:
-            data['updated_at'] = datetime.strptime(data['updated_at'], "%Y-%m-%dT%H:%M:%S.%f")
-        return cls(**data)
+        for key, value in self.__dict__.items():
+            if (key == 'created_at'):
+                data['created_at'] = self.created_at.isoformat()
+            elif (key == 'updated_at'):
+                data['updated_at'] = self.updated_at.isoformat()
+            elif (key != '__class__'):
+                data[key] = value
+
+        return data
 
     def save_to_file(self):
         """Save the instance to a JSON file"""
