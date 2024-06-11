@@ -82,6 +82,9 @@ class TestPlaces(unittest.TestCase):
         place.amenities.remove(amenity)
         self.assertNotIn(amenity, place.amenities)
     
+    def test_create_user_invalid_email(self):
+        with self.assertRaises(ValueError):
+            User.create(email="invalid email", first_name="Test", last_name="User")
     
     if __name__ == '__main__':
         unittest.main()
