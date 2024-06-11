@@ -28,7 +28,7 @@ def update_user(user_id):
 
 @app.route('/user/<user_id>', methods=['DELETE'])
 def delete_user(user_id):
-    return jsonify({}), 200
+    return jsonify({}), 204
 
 if __name__ == "__main__":
     app.run()
