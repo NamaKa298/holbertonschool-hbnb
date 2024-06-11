@@ -1,5 +1,4 @@
 from Model.BaseModel import BaseModel
-from Persistence.datamanager import data_manager
 import re
 
 users = {} # Need to be replaced by a database
@@ -9,7 +8,6 @@ class User(BaseModel):
     def __init__(self, *args, **kargs):
         super().__init__(*args, **kargs)
         self.places = []
-        data_manager.save(self)
 
     def get_full_name(self):
         return f"{self.firstname} {self.lastname}"

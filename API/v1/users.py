@@ -1,6 +1,5 @@
 from flask import request, jsonify
 from API.v1.app import app
-from Model.user import User
 from Persistence.datamanager import data_manager as user_repository
 
 @app.route('/test', methods=['GET'])
@@ -9,6 +8,7 @@ def test():
 
 @app.route('/users', methods=['POST'])
 def create_user():
+    from Model.user import User
     data = request.get_json()
     user = User(**data)
     user_repository.save(user)
