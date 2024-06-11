@@ -57,11 +57,19 @@ class BaseModel:
 
     def to_dict(self):
         """Return a dictionary representation of the instance for JSON"""
-        return {
-            'id': self.id,
-            'created_at': self.created_at.isoformat(),
-            'updated_at': self.updated_at.isoformat(),
-        }
+        #self.created_at.isoformat()
+        #self.updated_at.isoformat()
+        data = {}
+
+        for key, value in self.__dict__.items():
+            if (key == 'created_at'):
+                data['created_at'] = self.created_at.isoformat()
+            elif (key == 'updated_at'):
+                data['update_at'] = self.updated_at.isoformat()
+            elif (key != '__class__'):
+                data[key] = value
+
+        return data
 
     @classmethod
     def from_dict(cls, data):

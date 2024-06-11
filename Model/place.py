@@ -2,7 +2,7 @@ from Model.BaseModel import BaseModel
 from Model.user import User
 
 
-class Places(BaseModel):
+class Place(BaseModel):
     def __init__(self, *args, **kargs):
         super().__init__(*args, **kargs)
         self.amenities = []
@@ -20,8 +20,4 @@ class Places(BaseModel):
         host.places.append(place)
         return place
 
-maDataDelaDatabase={"name":"Villa sur les Hauteurs de la ville", "description":"Très belle maison en bord de mer"}
 
-place = Places(**maDataDelaDatabase)
-
-print(place.get_full_place(), place.__dict__)
