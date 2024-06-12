@@ -16,31 +16,30 @@ def create_user():
 
 @app.route('/users', methods=['GET'])
 def read_users():
-    users = user_repository.all("users")
-    return jsonify([user.to_dict() for user in users]), 200
+    users = user_repository.all("User")
+    return jsonify([users[id].to_dict() for id in users]), 200
 
 @app.route('/users/<id>', methods=['GET'])
-def read_user(email):
-    user = user_repository.find_by_email(email)
+def read_user(id):
+    user = user_repository.get(id, "User")
     if user is None:
         return jsonify({"error": "User not found"}), 404
     return jsonify(user.to_dict()), 200
 
 @app.route('/users/<id>', methods=['PUT'])
-def update_user(email):
-    user = user_repository.find_by_email(email)
+def update_user(id):
+    user = user_repository.get(id, "User")
     if user is None:
         return jsonify({"error": "User not found"}), 404
     data = request.get_json()
-    user.update(data)
-    user_repository.save(user)
+    user_repository.update(user, **data)
     return jsonify(user.to_dict()), 200
 
 @app.route('/users/<id>', methods=['DELETE'])
-def delete_user(email):
-    user = user_repository.find_by_email(email)
+def delete_user(id):
+    user = user_repository.get(id, "User")
     if user is None:
         return jsonify({"error": "User not found"}), 404
-    user_repository.delete(user)
+    user_repository.delete(user, "User")
     return jsonify({}), 204
 

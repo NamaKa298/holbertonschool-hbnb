@@ -38,6 +38,7 @@ class DataManager(IPersistenceManager):
         
     def __load_all(self):
         data = self.read_database()
+        print(data)
         for entity_type in data:
             self.storage[entity_type] = {}
             for entity_id in data[entity_type]:
@@ -70,14 +71,17 @@ class DataManager(IPersistenceManager):
     def get(self, entity_id, entity_type):
         return self.storage.get(entity_type, {}).get(entity_id, None)
 
-    def update(self, entity):
-        entity_type = type(entity).__name__
-        if entity_type in self.storage and entity.id in self.storage[entity_type]:
-            self.storage[entity_type][entity.id] = entity
+    def update(self, entity, **kwargs):
+        if (kwargs):
+            for key in kwargs:
+                setattr(entity, key, kwargs[key])
+            entity.updated_at = datetime.now()
+            self.save_all()
 
-    def delete(self, entity_id, entity_type):
-        if entity_type in self.storage and entity_id in self.storage[entity_type]:
-            del self.storage[entity_type][entity_id]
+    def delete(self, entity, entity_type):
+        if entity_type in self.storage and entity.id in self.storage[entity_type]:
+            del self.storage[entity_type][entity.id]
+            self.save_all()
 
 
 data_manager = DataManager()
