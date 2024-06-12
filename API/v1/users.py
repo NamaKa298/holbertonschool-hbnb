@@ -42,4 +42,3 @@ def delete_user(id):
         return jsonify({"error": "User not found"}), 404
     user_repository.delete(user, "User")
     return jsonify({}), 204
-

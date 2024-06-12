@@ -1,46 +1,44 @@
 from flask import request, jsonify
 from API.v1.app import app
-from Persistence.datamanager import data_manager as City_repository
+from Persistence.datamanager import data_manager as city_repository
 
 @app.route('/test', methods=['GET'])
 def test():
     return jsonify({"message": "Hello World"}), 200
 
-@app.route('/Cities', methods=['POST'])
-def create_City():
+@app.route('/cities', methods=['POST'])
+def create_user():
     from Model.city import City
     data = request.get_json()
-    City = City(**data)
-    City_repository.save(City)
-    return jsonify(City.to_dict()), 201
+    city = City(**data)
+    city_repository.save(city)
+    return jsonify(city.to_dict()), 201
 
-@app.route('/Cities', methods=['GET'])
-def read_Cities():
-    Cities = City_repository.all("Cities")
-    return jsonify([City.to_dict() for City in Cities]), 200
+@app.route('/cities', methods=['GET'])
+def read_users():
+    cities = city_repository.all("City")
+    return jsonify([cities[id].to_dict() for id in cities]), 200
 
-@app.route('/Cities/<id>', methods=['GET'])
-def read_City(email):
-    City = City_repository.find_by_email(email)
-    if City is None:
+@app.route('/cities/<id>', methods=['GET'])
+def read_user(id):
+    city = city_repository.get(id, "City")
+    if city is None:
         return jsonify({"error": "City not found"}), 404
-    return jsonify(City.to_dict()), 200
+    return jsonify(city.to_dict()), 200
 
-@app.route('/Cities/<id>', methods=['PUT'])
-def update_City(email):
-    City = City_repository.find_by_email(email)
-    if City is None:
+@app.route('/cities/<id>', methods=['PUT'])
+def update_user(id):
+    city = city_repository.get(id, "City")
+    if city is None:
         return jsonify({"error": "City not found"}), 404
     data = request.get_json()
-    City.update(data)
-    City_repository.save(City)
-    return jsonify(City.to_dict()), 200
+    city_repository.update(city, **data)
+    return jsonify(city.to_dict()), 200
 
-@app.route('/Cities/<id>', methods=['DELETE'])
-def delete_City(email):
-    City = City_repository.find_by_email(email)
-    if City is None:
+@app.route('/cities/<id>', methods=['DELETE'])
+def delete_user(id):
+    city = city_repository.get(id, "City")
+    if city is None:
         return jsonify({"error": "City not found"}), 404
-    City_repository.delete(City)
+    city_repository.delete(city, "City")
     return jsonify({}), 204
-
