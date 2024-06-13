@@ -19,9 +19,10 @@ class DataManager(IPersistenceManager):
         self.storage = {}  # For the sake of simplicity, we'll use a dictionary as our storage
         self.__load_all()
 
-    def read_database(self):
+    def read_database(self, database_name = None):
+        database_path = f'Persistence/{database_name}.json' if database_name else 'Persistence/database.json'
         try:
-            with open('Persistence/database.json', 'r') as file:
+            with open(database_path, 'r') as file:
                 return json.load(file)
         except Exception:
             return {}
