@@ -1,31 +1,21 @@
 import json
 from datetime import datetime
-from Model.amenity import Amenity
-from Model.city import City
-from Model.country import Country
-from Model.owner import Owner
-from Model.place import Place
-from Model.review import Review
-from Model.reviewer import Reviewer
-from Model.user import User
 from typing import TypeVar, List, Dict
 from Persistence.interface_persistence import IPersistenceManager
-
-classes = {
-    "Amenity": Amenity,
-    "City": City,
-    "Country": Country,
-    "Owner": Owner,
-    "Place": Place,
-    "Review": Review,
-    "Reviewer": Reviewer,
-    "User": User,
-}
 
 
 class DataManager(IPersistenceManager):
 
     def __init__(self):
+        import Model
+        self.classes = {
+            "Amenity": Model.Amenity,
+            "City": Model.City,
+            "Country": Model.Country,
+            "Place": Model.Place,
+            "Review": Model.Review,
+            "User": Model.User,
+        }
         self.storage = {}  # For the sake of simplicity, we'll use a dictionary as our storage
         self.__load_all()
 
@@ -38,11 +28,10 @@ class DataManager(IPersistenceManager):
         
     def __load_all(self):
         data = self.read_database()
-        print(data)
         for entity_type in data:
             self.storage[entity_type] = {}
             for entity_id in data[entity_type]:
-                clazz = classes[entity_type]
+                clazz = self.classes[entity_type]
                 entity_data = data[entity_type][entity_id]
                 entity = clazz(**entity_data)
                 self.storage[entity_type][entity_id] = entity

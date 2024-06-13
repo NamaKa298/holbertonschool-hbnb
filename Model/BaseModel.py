@@ -37,22 +37,6 @@ class BaseModel:
             else False
         )
 
-    @classmethod
-    def create(cls, *args, **kwargs):
-        try:
-            if (data[cls.__name__]):
-                instance = cls(*args, **kwargs)
-                if (cls.exists(instance)):
-                    return cls.create(*args, **kwargs)
-                data[cls.__name__][kwargs["id"]] = instance
-                return instance
-            else:
-                data[cls.__name__] = {}
-                return cls.create(*args, **kwargs)
-        except Exception as e:
-            print(f"An error occured while creating instance of {cls.__name__}.\n{e}")
-
-
     def to_dict(self):
         """Return a dictionary representation of the instance for JSON"""
         #self.created_at.isoformat()
@@ -68,16 +52,3 @@ class BaseModel:
                 data[key] = value
 
         return data
-
-    def save_to_file(self):
-        """Save the instance to a JSON file"""
-        self.updated_at = datetime.now()
-        with open(f'{self.id}.json', 'w') as f:
-            json.dump(self.to_dict(), f)
-
-    @classmethod
-    def load_from_file(cls, id):
-        """Load an instance from a JSON file"""
-        with open(f'{id}.json', 'r') as f:
-            data = json.load(f)
-        return cls.from_dict(data)
