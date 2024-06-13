@@ -5,7 +5,14 @@ from Model.city import City
 
 @app.route('/cities', methods=['POST'])
 def create_city():
+    all_cities = city_repository.all("City")
     data = request.get_json()
+    for id in all_cities:
+        current_city = all_cities[id]
+        has_same_name = current_city.name == data["name"]
+        has_same_country_code = current_city.country_code == data["country_code"]
+        if has_same_name and has_same_country_code:
+            return jsonify({"error": "City already exist in this country"}), 404  
     city = City(**data)
     city_repository.save(city)
     return jsonify(city.to_dict()), 201
